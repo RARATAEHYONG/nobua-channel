@@ -286,6 +286,12 @@ export async function getYouTubeActivities(
     }
 
     const html = await response.text();
+    const newestPosts = await fetchNewestCommunityPosts(html);
+
+    if (newestPosts.length > 0) {
+      return newestPosts.slice(0, limit);
+    }
+
     return parseCommunityPosts(html).slice(0, limit);
   } catch (error) {
     console.error(error);
@@ -343,21 +349,16 @@ function formatDuration(value?: string) {
 }
 
 function parseCommunityPosts(html: string): YouTubeActivity[] {
-  const marker = "var ytInitialData = ";
-  const start = html.indexOf(marker);
+  const data = extractYouTubeInitialData(html);
 
-  if (start === -1) {
+  if (!data) {
     return [];
   }
 
-  const end = html.indexOf(";</script>", start);
+  return parseCommunityPostsFromData(data);
+}
 
-  if (end === -1) {
-    return [];
-  }
-
-  const jsonText = html.slice(start + marker.length, end);
-  const data = JSON.parse(jsonText) as unknown;
+function parseCommunityPostsFromData(data: unknown): YouTubeActivity[] {
   const renderers: UnknownRecord[] = [];
 
   walkUnknown(data, (record) => {
@@ -376,6 +377,116 @@ function parseCommunityPosts(html: string): YouTubeActivity[] {
         getCommunityPostAgeInMs(a.publishedAt) -
         getCommunityPostAgeInMs(b.publishedAt),
     );
+}
+
+function extractYouTubeInitialData(html: string) {
+  const marker = "var ytInitialData = ";
+  const start = html.indexOf(marker);
+
+  if (start === -1) {
+    return null;
+  }
+
+  const end = html.indexOf(";</script>", start);
+
+  if (end === -1) {
+    return null;
+  }
+
+  const jsonText = html.slice(start + marker.length, end);
+  return JSON.parse(jsonText) as unknown;
+}
+
+async function fetchNewestCommunityPosts(html: string) {
+  const data = extractYouTubeInitialData(html);
+  const continuation = data ? getNewestCommunityContinuationToken(data) : "";
+  const apiKey = extractHtmlConfig(html, "INNERTUBE_API_KEY");
+  const clientVersion =
+    extractHtmlConfig(html, "INNERTUBE_CLIENT_VERSION") ??
+    extractServiceTrackingValue(html, "client.version");
+
+  if (!continuation || !apiKey || !clientVersion) {
+    return [];
+  }
+
+  try {
+    const response = await fetch(
+      `https://www.youtube.com/youtubei/v1/browse?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "https://www.youtube.com",
+          Referer:
+            "https://www.youtube.com/channel/UCfiCrUkkcrlJO_JflFKgBow/community",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        body: JSON.stringify({
+          context: {
+            client: {
+              clientName: "WEB",
+              clientVersion,
+              hl: "ja",
+              gl: "JP",
+            },
+          },
+          continuation,
+        }),
+        next: { revalidate: DEFAULT_REVALIDATE_SECONDS },
+      },
+    );
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const newestData = (await response.json()) as unknown;
+    return parseCommunityPostsFromData(newestData);
+  } catch {
+    return [];
+  }
+}
+
+function getNewestCommunityContinuationToken(data: unknown) {
+  let token = "";
+
+  walkUnknown(data, (record) => {
+    if (token) {
+      return;
+    }
+
+    const chip = getRecord(record, "chipCloudChipRenderer");
+    if (!chip) {
+      return;
+    }
+
+    const text = getString(getRecord(chip, "text"), "simpleText");
+
+    if (text !== "新しい順") {
+      return;
+    }
+
+    token = getNestedString(chip, [
+      "navigationEndpoint",
+      "continuationCommand",
+      "token",
+    ]);
+  });
+
+  return token;
+}
+
+function extractHtmlConfig(html: string, key: string) {
+  const pattern = new RegExp(`"${key}"\\s*:\\s*"([^"]+)"`);
+  return html.match(pattern)?.[1] ?? "";
+}
+
+function extractServiceTrackingValue(html: string, key: string) {
+  const pattern = new RegExp(
+    `"key"\\s*:\\s*"${key}"\\s*,\\s*"value"\\s*:\\s*"([^"]+)"`,
+  );
+  return html.match(pattern)?.[1] ?? "";
 }
 
 function parseCommunityPostRenderer(
