@@ -655,31 +655,63 @@ function isRecord(value: unknown): value is UnknownRecord {
 }
 
 function getCommunityPostAgeInMs(value: string) {
-  const normalized = value.replace(/（.*?）/g, "");
+  const normalized = value
+    .replace(/（.*?）/g, "")
+    .replace(/\(.*?\)/g, "")
+    .toLowerCase();
   const amountMatch = normalized.match(/(\d+)/);
   const amount = amountMatch ? Number(amountMatch[1]) : 0;
 
-  if (normalized.includes("分前")) {
+  if (normalized.includes("たった今") || normalized.includes("just now")) {
+    return 0;
+  }
+
+  if (
+    normalized.includes("分前") ||
+    normalized.includes("minute ago") ||
+    normalized.includes("minutes ago")
+  ) {
     return amount * 60 * 1000;
   }
 
-  if (normalized.includes("時間前")) {
+  if (
+    normalized.includes("時間前") ||
+    normalized.includes("hour ago") ||
+    normalized.includes("hours ago")
+  ) {
     return amount * 60 * 60 * 1000;
   }
 
-  if (normalized.includes("日前")) {
+  if (
+    normalized.includes("日前") ||
+    normalized.includes("day ago") ||
+    normalized.includes("days ago")
+  ) {
     return amount * 24 * 60 * 60 * 1000;
   }
 
-  if (normalized.includes("週間前")) {
+  if (
+    normalized.includes("週間前") ||
+    normalized.includes("week ago") ||
+    normalized.includes("weeks ago")
+  ) {
     return amount * 7 * 24 * 60 * 60 * 1000;
   }
 
-  if (normalized.includes("か月前") || normalized.includes("ヶ月前")) {
+  if (
+    normalized.includes("か月前") ||
+    normalized.includes("ヶ月前") ||
+    normalized.includes("month ago") ||
+    normalized.includes("months ago")
+  ) {
     return amount * 30 * 24 * 60 * 60 * 1000;
   }
 
-  if (normalized.includes("年前")) {
+  if (
+    normalized.includes("年前") ||
+    normalized.includes("year ago") ||
+    normalized.includes("years ago")
+  ) {
     return amount * 365 * 24 * 60 * 60 * 1000;
   }
 
