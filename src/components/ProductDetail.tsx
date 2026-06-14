@@ -40,6 +40,18 @@ export default function ProductDetail({ item }: ProductDetailProps) {
     [],
   );
   const hasSizes = Boolean(item.sizes?.length);
+  const contactHref = `/contact?subject=goods&message=${encodeURIComponent(
+    [
+      `商品名：${item.name}`,
+      `価格：${item.price}`,
+      hasSizes ? `サイズ：${selectedSize || "未選択"}` : null,
+      `数量：${quantity}`,
+      "",
+      "購入希望です。詳細を確認したいです。",
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  )}`;
 
   return (
     <section className="mx-auto max-w-[1600px] px-6 py-12 sm:px-10 lg:px-16">
@@ -180,6 +192,9 @@ export default function ProductDetail({ item }: ProductDetailProps) {
 
           <button
             type="button"
+            onClick={() => {
+              window.location.href = contactHref;
+            }}
             className="mt-6 flex h-14 items-center justify-center border border-white/15 font-jp text-sm font-bold tracking-wide text-white transition-colors hover:border-white/50"
           >
             今すぐ購入する →

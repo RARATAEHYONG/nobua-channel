@@ -96,7 +96,7 @@ export default function Hero({ channel }: HeroProps) {
           </div>
         </div>
 
-        <div className="relative hidden items-center justify-center lg:flex">
+        <div className="relative flex items-center justify-center">
           <div className="relative aspect-square w-full max-w-xl overflow-hidden border border-white/10 bg-background">
             <div
               className="absolute right-0 top-0 z-10 h-24 w-24 bg-accent"
@@ -119,8 +119,8 @@ export default function Hero({ channel }: HeroProps) {
               />
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-4 border-t border-white/10 bg-background/80 px-6 py-5 backdrop-blur-sm">
-              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-accent">
+            <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-3 border-t border-white/10 bg-background/80 px-4 py-4 backdrop-blur-sm sm:gap-4 sm:px-6 sm:py-5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-accent">
                 <Play
                   size={18}
                   className="fill-white text-white"
