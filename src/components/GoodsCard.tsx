@@ -38,9 +38,9 @@ export default function GoodsCard({ item }: GoodsCardProps) {
         )}
       </Link>
 
-      <div className="flex flex-col gap-3 p-5">
+      <div className="flex flex-1 flex-col gap-3 p-5">
         <Link href={`/goods/${item.slug}`}>
-          <h3 className="font-jp text-base font-bold leading-snug text-white transition-colors hover:text-accent">
+          <h3 className="line-clamp-2 min-h-[3.25rem] font-jp text-base font-bold leading-snug text-white transition-colors hover:text-accent">
             {item.name}
           </h3>
         </Link>
