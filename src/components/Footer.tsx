@@ -49,9 +49,9 @@ export default async function Footer() {
     <footer className="border-t border-white/5 bg-background">
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-6 py-16 sm:px-10 md:grid-cols-3 lg:px-16">
         <div className="flex flex-col gap-6">
-          <div className="h-12 w-20 overflow-hidden bg-background">
+          <div className="h-12 w-20 overflow-hidden bg-transparent">
             <img
-              src="/images/nobua-logo-banner.png"
+              src="/images/nobua-logo-transparent.png"
               alt="Nobua logo"
               width={160}
               height={96}
