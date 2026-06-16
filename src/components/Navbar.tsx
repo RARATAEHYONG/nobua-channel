@@ -12,9 +12,14 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/90 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-4 sm:px-10 lg:px-16">
-        <Link href="/" aria-label="のぶあチャンネル ホーム" onClick={closeMenu}>
-          <Logo size="sm" />
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-3 sm:px-10 lg:px-16">
+        <Link
+          href="/"
+          aria-label="のぶあチャンネル ホーム"
+          onClick={closeMenu}
+          className="header-logo-link"
+        >
+          <Logo size="md" className="header-logo-mark" />
         </Link>
 
         <nav

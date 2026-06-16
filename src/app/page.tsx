@@ -15,10 +15,10 @@ export default async function HomePage() {
       <Navbar />
       <main>
         <Hero channel={channel} />
+        <OfficialGoods />
         <LatestEventNotice />
         <LatestVideos />
         <ChannelPosts />
-        <OfficialGoods />
       </main>
       <Footer />
     </>

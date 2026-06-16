@@ -49,6 +49,22 @@ header {
   animation: nav-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  min-height: 68px;
+}
+
+.header-logo-mark {
+  background: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.16));
+}
+
+.header-logo-mark img {
+  transform: scale(1.85);
+  mix-blend-mode: screen;
+}
+
 main > section {
   animation: section-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

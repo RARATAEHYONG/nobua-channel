@@ -5,7 +5,10 @@ import { GOODS_ITEMS } from "@/data/site";
 
 export default function OfficialGoods() {
   return (
-    <section className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10 lg:px-16">
+    <section
+      id="official-goods"
+      className="mx-auto max-w-[1600px] scroll-mt-24 px-6 py-20 sm:px-10 lg:px-16"
+    >
       <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <SectionHeading eyebrow="OFFICIAL GOODS" title="公式グッズ" />
         <p className="font-jp text-sm text-white/50">
