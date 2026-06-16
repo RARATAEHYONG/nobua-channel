@@ -140,8 +140,8 @@ export default function Hero({ channel }: HeroProps) {
 
       <div className="relative mx-auto hidden max-w-[1600px] px-6 pb-10 sm:px-10 lg:flex lg:px-16">
         <a
-          href="#latest-videos"
-          aria-label="Scroll to latest videos"
+          href="#latest-event"
+          aria-label="Scroll to latest event notice"
           className="group flex flex-col items-center gap-3"
         >
           <span className="font-sans text-xs font-bold tracking-[0.3em] text-white/40">

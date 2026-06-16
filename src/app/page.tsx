@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import LatestEventNotice from "@/components/LatestEventNotice";
 import LatestVideos from "@/components/LatestVideos";
 import ChannelPosts from "@/components/ChannelPosts";
 import OfficialGoods from "@/components/OfficialGoods";
@@ -14,6 +15,7 @@ export default async function HomePage() {
       <Navbar />
       <main>
         <Hero channel={channel} />
+        <LatestEventNotice />
         <LatestVideos />
         <ChannelPosts />
         <OfficialGoods />
