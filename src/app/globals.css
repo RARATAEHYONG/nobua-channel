@@ -12,8 +12,29 @@ html {
 }
 
 body {
+  position: relative;
   background-color: #0a0a0a;
   color: #ffffff;
+  isolation: isolate;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 18% 12%, rgba(229, 9, 20, 0.12), transparent 28%),
+    radial-gradient(circle at 82% 34%, rgba(255, 255, 255, 0.055), transparent 24%),
+    linear-gradient(120deg, transparent 0%, rgba(229, 9, 20, 0.035) 50%, transparent 100%);
+  background-size: 120% 120%, 110% 110%, 220% 220%;
+  animation: ambient-shift 18s ease-in-out infinite alternate;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Subtle background grid used across sections */
@@ -24,8 +45,205 @@ body {
   background-size: 48px 48px;
 }
 
+header {
+  animation: nav-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+main > section {
+  animation: section-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+main > section:nth-of-type(2) {
+  animation-delay: 0.08s;
+}
+
+main > section:nth-of-type(3) {
+  animation-delay: 0.16s;
+}
+
+main > section:nth-of-type(4) {
+  animation-delay: 0.24s;
+}
+
+main > section:nth-of-type(5) {
+  animation-delay: 0.32s;
+}
+
+main article {
+  animation: content-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+main article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+}
+
+.section-heading {
+  animation: heading-reveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.section-heading-rule {
+  transform-origin: left center;
+  animation: rule-swipe 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+a[class*="bg-accent"],
+button[class*="bg-accent"] {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    opacity 220ms ease;
+}
+
+a[class*="bg-accent"]:hover,
+button[class*="bg-accent"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(229, 9, 20, 0.28);
+}
+
+a[class*="bg-accent"]::after,
+button[class*="bg-accent"]::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 65%,
+    transparent 100%
+  );
+  transform: translateX(-130%);
+}
+
+a[class*="bg-accent"]:hover::after,
+button[class*="bg-accent"]:hover::after {
+  animation: cta-shine 0.75s ease;
+}
+
+.bg-grid::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.035),
+    transparent
+  );
+  transform: translateY(-100%);
+  animation: grid-scan 5.5s ease-in-out infinite;
+}
+
 .scroll-moving-arrow {
   animation: scroll-moving-arrow 1.15s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+@keyframes ambient-shift {
+  from {
+    background-position: 0% 0%, 100% 30%, 0% 50%;
+  }
+
+  to {
+    background-position: 18% 10%, 78% 58%, 100% 50%;
+  }
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes section-rise {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes content-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heading-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rule-swipe {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cta-shine {
+  from {
+    transform: translateX(-130%);
+  }
+
+  to {
+    transform: translateX(130%);
+  }
+}
+
+@keyframes grid-scan {
+  0%,
+  42% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
 @keyframes scroll-moving-arrow {
@@ -67,5 +285,10 @@ select:focus-visible {
   .scroll-moving-arrow {
     animation: scroll-moving-arrow 1.15s cubic-bezier(0.45, 0, 0.2, 1)
       infinite !important;
+  }
+
+  body::before,
+  .bg-grid::after {
+    animation: none !important;
   }
 }

@@ -12,7 +12,7 @@ export default async function LatestEventNotice() {
       className="mx-auto max-w-[1600px] scroll-mt-24 px-6 py-20 sm:px-10 lg:px-16"
     >
       <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-        <SectionHeading eyebrow="LATEST EVENT" title="最新のイベントのお知らせ" />
+        <SectionHeading eyebrow="LATEST EVENT" title="お知らせ" />
         <a
           href="https://www.youtube.com/channel/UCfiCrUkkcrlJO_JflFKgBow/community"
           target="_blank"
