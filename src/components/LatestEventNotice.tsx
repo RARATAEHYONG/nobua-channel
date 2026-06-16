@@ -25,7 +25,11 @@ export default async function LatestEventNotice() {
       </div>
 
       {post ? (
-        <article className="grid overflow-hidden border border-white/10 bg-surface/50 lg:grid-cols-[0.9fr_1.1fr]">
+        <article
+          className={`grid overflow-hidden border border-white/10 bg-surface/50 ${
+            post.thumbnail ? "lg:grid-cols-[0.9fr_1.1fr]" : ""
+          }`}
+        >
           {post.thumbnail ? (
             <a
               href={post.url}
@@ -44,15 +48,18 @@ export default async function LatestEventNotice() {
                 {post.type}
               </span>
             </a>
-          ) : (
-            <div className="flex min-h-[180px] items-start bg-black/40 p-6">
-              <span className="bg-accent px-4 py-2 font-sans text-xs font-bold tracking-wide text-white">
+          ) : null}
+
+          <div
+            className={`flex flex-col p-6 sm:p-8 lg:p-10 ${
+              post.thumbnail ? "" : "mx-auto w-full max-w-4xl"
+            }`}
+          >
+            {!post.thumbnail ? (
+              <span className="mb-6 w-fit bg-accent px-4 py-2 font-sans text-xs font-bold tracking-wide text-white">
                 {post.type}
               </span>
-            </div>
-          )}
-
-          <div className="flex flex-col p-6 sm:p-8 lg:p-10">
+            ) : null}
             <div className="mb-4 flex items-center gap-2 font-jp text-xs text-white/45">
               <CalendarDays size={15} aria-hidden="true" />
               {post.publishedAt}
