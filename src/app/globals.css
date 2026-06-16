@@ -52,17 +52,18 @@ header {
 .header-logo-link {
   display: flex;
   align-items: center;
-  min-height: 68px;
+  min-height: 52px;
 }
 
 .header-logo-mark {
+  width: 92px;
+  height: 48px;
   background: transparent;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.16));
+  filter: none;
 }
 
 .header-logo-mark img {
-  transform: scale(1.85);
-  mix-blend-mode: screen;
+  transform: none;
 }
 
 main > section {

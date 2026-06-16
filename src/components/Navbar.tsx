@@ -19,7 +19,11 @@ export default function Navbar() {
           onClick={closeMenu}
           className="header-logo-link"
         >
-          <Logo size="md" className="header-logo-mark" />
+          <Logo
+            size="md"
+            variant="transparent"
+            className="header-logo-mark"
+          />
         </Link>
 
         <nav

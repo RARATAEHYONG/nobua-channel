@@ -1,6 +1,7 @@
 type LogoProps = {
   className?: string;
   size?: "sm" | "md" | "lg";
+  variant?: "banner" | "transparent";
 };
 
 const SIZE_MAP: Record<NonNullable<LogoProps["size"]>, string> = {
@@ -9,13 +10,22 @@ const SIZE_MAP: Record<NonNullable<LogoProps["size"]>, string> = {
   lg: "h-24 w-36",
 };
 
-export default function Logo({ className = "", size = "sm" }: LogoProps) {
+export default function Logo({
+  className = "",
+  size = "sm",
+  variant = "banner",
+}: LogoProps) {
+  const src =
+    variant === "transparent"
+      ? "/images/nobua-logo-transparent.png"
+      : "/images/nobua-logo-banner.png";
+
   return (
     <div
       className={`flex items-center justify-center overflow-hidden bg-background ${SIZE_MAP[size]} ${className}`}
     >
       <img
-        src="/images/nobua-logo-banner.png"
+        src={src}
         alt="のぶあ"
         width={144}
         height={96}
