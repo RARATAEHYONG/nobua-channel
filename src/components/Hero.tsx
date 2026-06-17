@@ -111,7 +111,7 @@ export default function Hero({ channel }: HeroProps) {
 
             <div className="flex h-full w-full items-center justify-center">
               <img
-                src="/images/nobua-hero-vocal.png"
+                src="/images/nobua-mainlogo.jpg"
                 alt="Nobua recording vocals in a studio"
                 width={1200}
                 height={1200}
