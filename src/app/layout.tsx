@@ -18,7 +18,7 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: "のぶあチャンネル | Official Website",
   description:
-    "日常vlog、ゲーム実況、料理など多彩なコンテンツをお届けするのぶあチャンネルの公式サイト。",
+    "切なく感情を込めた歌声で、歌ってみたやオリジナルソングを届けるシンガー・のぶあの公式サイト。最新動画、ライブ情報、チャンネル投稿、公式グッズを掲載しています。",
 };
 
 export default function RootLayout({
